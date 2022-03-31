@@ -1,12 +1,10 @@
-import "reflect-metadata";
-import { Intents, Interaction, Message } from "discord.js";
-import { Client } from "discordx";
-import { dirname, importx } from "@discordx/importer";
+import 'reflect-metadata';
+import 'dotenv/config';
+import { Intents, Interaction, Message } from 'discord.js';
+import { Client } from 'discordx';
+import { dirname, importx } from '@discordx/importer';
 
 export const client = new Client({
-  simpleCommand: {
-    prefix: "!",
-  },
   intents: [
     Intents.FLAGS.GUILDS,
     Intents.FLAGS.GUILD_MEMBERS,
@@ -18,7 +16,7 @@ export const client = new Client({
   botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
 });
 
-client.once("ready", async () => {
+client.once('ready', async () => {
   // make sure all guilds are in cache
   await client.guilds.fetch();
 
@@ -37,30 +35,24 @@ client.once("ready", async () => {
   //    ...client.guilds.cache.map((g) => g.id)
   //  );
 
-  console.log("Bot started");
+  console.log('Bot started');
 });
 
-client.on("interactionCreate", (interaction: Interaction) => {
+client.on('interactionCreate', (interaction: Interaction) => {
   client.executeInteraction(interaction);
 });
 
-client.on("messageCreate", (message: Message) => {
+client.on('messageCreate', (message: Message) => {
   client.executeCommand(message);
 });
 
 async function run() {
-  // with cjs
-  // await importx(__dirname + "/{events,commands}/**/*.{ts,js}");
-  // with ems
-  await importx(
-    dirname(import.meta.url) + "/{events,commands,api}/**/*.{ts,js}"
-  );
+  await importx(dirname(import.meta.url) + '/{events,commands}/**/*.{ts,js}');
 
-  // let's start the bot
   if (!process.env.BOT_TOKEN) {
-    throw Error("Could not find BOT_TOKEN in your environment");
+    throw Error('Could not find BOT_TOKEN in your environment');
   }
-  await client.login(process.env.BOT_TOKEN); // provide your bot token
+  await client.login(process.env.BOT_TOKEN);
 }
 
 run();

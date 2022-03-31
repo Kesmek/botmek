@@ -16,10 +16,12 @@
     "@discordx/pagination": "^2.0.1",
     "discord.js": "^13.6.0",
     "discordx": "^9.4.4",
+    "dotenv": "^16.0.0",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {
     "@types/node": "^17.0.23",
+    "eslint": "^8.12.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.1",
     "ts-node": "^10.7.0",
