@@ -15,6 +15,7 @@ COPY src ./src
 COPY tsconfig.json .
 COPY prisma ./prisma
 COPY .env .
+RUN rm ./prisma/data.*
 RUN npx prisma db push
 
 # Build project

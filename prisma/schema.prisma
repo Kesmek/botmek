@@ -22,7 +22,7 @@ model Command {
   enabled             Boolean @default(true)
   whitelistedRoles    String
   whitelistedChannels String
-  guild               Guild   @relation(fields: [guildId], references: [id])
+  guild               Guild   @relation(fields: [guildId], references: [id], onDelete: Cascade)
 }
 
 model Event {
@@ -37,5 +37,5 @@ model Event {
   djs           String
   photographers String
   guildId       String
-  guild         Guild     @relation(fields: [guildId], references: [id])
+  guild         Guild     @relation(fields: [guildId], references: [id], onDelete: Cascade)
 }

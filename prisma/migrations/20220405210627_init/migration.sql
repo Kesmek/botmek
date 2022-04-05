@@ -13,7 +13,7 @@ CREATE TABLE "Command" (
     "enabled" BOOLEAN NOT NULL DEFAULT true,
     "whitelistedRoles" TEXT NOT NULL,
     "whitelistedChannels" TEXT NOT NULL,
-    CONSTRAINT "Command_guildId_fkey" FOREIGN KEY ("guildId") REFERENCES "Guild" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Command_guildId_fkey" FOREIGN KEY ("guildId") REFERENCES "Guild" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- CreateTable
@@ -29,5 +29,5 @@ CREATE TABLE "Event" (
     "djs" TEXT NOT NULL,
     "photographers" TEXT NOT NULL,
     "guildId" TEXT NOT NULL,
-    CONSTRAINT "Event_guildId_fkey" FOREIGN KEY ("guildId") REFERENCES "Guild" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+    CONSTRAINT "Event_guildId_fkey" FOREIGN KEY ("guildId") REFERENCES "Guild" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
