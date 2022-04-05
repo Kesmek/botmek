@@ -14,9 +14,11 @@
   "dependencies": {
     "@discordx/importer": "^1.1.2",
     "@discordx/pagination": "^2.0.1",
+    "@prisma/client": "^3.11.1",
     "discord.js": "^13.6.0",
     "discordx": "^9.4.4",
     "dotenv": "^16.0.0",
+    "prisma": "^3.11.1",
     "reflect-metadata": "^0.1.13"
   },
   "devDependencies": {

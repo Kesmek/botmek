@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Guild {
+  id        String    @id
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  commands  Command[]
+  events    Event[]
+}
+
+model Command {
+  id                  Int     @id @default(autoincrement())
+  name                String
+  guildId             String
+  enabled             Boolean @default(true)
+  whitelistedRoles    String
+  whitelistedChannels String
+  guild               Guild   @relation(fields: [guildId], references: [id])
+}
+
+model Event {
+  id            String    @id
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  endTime       DateTime?
+  dancers       String
+  floaters      String
+  security      String
+  hosts         String
+  djs           String
+  photographers String
+  guildId       String
+  guild         Guild     @relation(fields: [guildId], references: [id])
+}

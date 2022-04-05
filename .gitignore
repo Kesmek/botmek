@@ -5,9 +5,7 @@ package-lock.json
 .vscode
 
 # Database files
-prisma/*
-# Include schema
-!prisma/schema.prisma
+prisma/data*
 
 # Environment variables files
 .env
