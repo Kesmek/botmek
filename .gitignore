@@ -3,3 +3,11 @@ node_modules
 yarn.lock
 package-lock.json
 .vscode
+
+# Database files
+prisma/*
+# Include schema
+!prisma/schema.prisma
+
+# Environment variables files
+.env
