@@ -1,3 +1,4 @@
+import { Event } from '@prisma/client';
 import {
   ButtonInteraction,
   CommandInteraction,
@@ -5,40 +6,57 @@ import {
   MessageButton,
   MessageEmbed,
 } from 'discord.js';
-import { ButtonComponent, Discord, Permission, Slash } from 'discordx';
+import { ButtonComponent, Discord, Guard, Permission, Slash } from 'discordx';
+import { prisma } from '../DB/prisma.js';
+import { NotBotInteraction } from '../guards/notBotInteraction.js';
+import { TimeUtils } from '../utils/utils.js';
+import { getDefaultPermissions } from './defaultPermissions.js';
+import { errorReply } from './generalCommands.js';
 
+const { convertToMilli, TIME_UNIT } = TimeUtils;
 @Discord()
-@Permission(false)
-@Permission({ type: 'ROLE', permission: true, id: '949834489146798160' }) //TEST-SERVER 18+ ROLE
-@Permission({ type: 'ROLE', permission: true, id: '950518180525269123' }) //Atlantis Owner
-@Permission({ type: 'ROLE', permission: true, id: '950518180525269122' }) //Atlantis Co-Owner
-@Permission({ type: 'ROLE', permission: true, id: '950518180504272903' }) //Atlantis Head Admin
-@Permission({ type: 'ROLE', permission: true, id: '950518180466528345' }) //Atlantis Dance Captain
-@Permission({ type: 'ROLE', permission: true, id: '950518180504272900' }) //Atlantis Host
+@Permission((guild, cmd) => getDefaultPermissions(guild, cmd))
+@Guard(NotBotInteraction)
 export class StaffCommands {
-  private dancers: string[] = [];
-  private hosts: string[] = [];
-  private security: string[] = [];
-  private DJs: string[] = [];
-  private photographers: string[] = [];
-  private timestamp = 0;
-
   @Slash('setup-registration')
   async setupRegistration(interaction: CommandInteraction) {
-    await interaction.deferReply();
+    //Ensure guildId exists
+    if (!interaction.guildId) {
+      errorReply(interaction);
+      return;
+    }
 
-    this.resetFields();
-    this.timestamp = Math.round(this.getNextSaturday().getTime() / 1000);
+    const currentEvent = await this.getCurrentEvent();
+    if (currentEvent) {
+      this.warnUser(interaction, currentEvent);
+      return;
+    }
+    const lastEvent = await prisma.event.findFirst({
+      where: {
+        endTime: {
+          lt: new Date(),
+        },
+      },
+      orderBy: {
+        id: 'desc',
+      },
+    });
+    await interaction.deferReply();
 
     const embed = new MessageEmbed()
       .addFields([
         { name: 'Dancers', value: '0', inline: true },
+        { name: 'Floaters', value: '0', inline: true },
         { name: 'Hosts', value: '0', inline: true },
         { name: 'Security', value: '0', inline: true },
         { name: 'DJs', value: '0', inline: true },
         { name: 'Photographers', value: '0', inline: true },
       ])
-      .setDescription(this.formatStaff())
+      .setDescription(
+        `**__Dancers__**\n\n**__Floaters__**\n\n**__Hosts__**\n\n**__Security__**\n\n**__DJs__**\n\n**__Photographers__**\n\n**__Deadline__**\n<t:${Math.round(
+          this.getNextSaturday().getTime() / 1000
+        )}:R>\n`
+      )
       .setTitle('Staff Registration')
       .setFooter({
         text: interaction.user.tag,
@@ -76,44 +94,134 @@ export class StaffCommands {
       .setStyle('PRIMARY')
       .setCustomId('photographer-button');
 
-    const row = new MessageActionRow().addComponents(
+    const floaterButton = new MessageButton()
+      .setLabel('Floater')
+      .setEmoji('🕴')
+      .setStyle('PRIMARY')
+      .setCustomId('floater-button');
+
+    const firstRow = new MessageActionRow().addComponents(
       dancerButton,
-      hostButton,
+      floaterButton,
+      hostButton
+    );
+
+    const secondRow = new MessageActionRow().addComponents(
       securityButton,
       djButton,
       photographerButton
     );
 
-    interaction.editReply({
+    const reply = await interaction.editReply({
       embeds: [embed],
-      components: [row],
+      components: [firstRow, secondRow],
     });
+
+    await prisma.event.create({
+      data: {
+        dancers: ``,
+        djs: ``,
+        hosts: ``,
+        security: ``,
+        photographers: ``,
+        floaters: ``,
+        id: reply.id,
+        endTime: this.getNextSaturday(),
+        guildId: interaction.guildId,
+      },
+    });
+
+    if (lastEvent) {
+      const lastMessage = await interaction.channel?.messages.fetch(
+        lastEvent.id
+      );
+      await lastMessage?.edit({
+        embeds: lastMessage?.embeds,
+        components: [],
+      });
+    }
   }
 
   @ButtonComponent('dancer-button')
   async dancerButton(interaction: ButtonInteraction) {
     const embed = new MessageEmbed(interaction.message.embeds?.[0]);
     const fields = embed.fields ?? [];
-    const user = `<@${interaction.user.id}>`;
-    const included = this.dancers.includes(user);
+    const user = interaction.user.id;
 
-    let dancers = this.dancers.filter((dancer) => {
-      return dancer !== user;
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
     });
-    if (!included) {
-      dancers.push(user);
-    }
+    const dancers = this.safeConcat(this.parseUsers(result?.dancers), user);
+    const floaters = this.parseUsers(result?.floaters);
+    const hosts = this.parseUsers(result?.hosts);
+    const security = this.parseUsers(result?.security);
+    const djs = this.parseUsers(result?.djs);
+    const photographers = this.parseUsers(result?.photographers);
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
 
-    embed.setFields(
-      fields.map((field) => {
-        if (field.name === 'Dancers') {
-          field.value = `${dancers.length}`;
-        }
-        return field;
-      })
-    );
-    this.dancers = dancers;
-    embed.setDescription(this.formatStaff());
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { dancers: dancers.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
+
+    interaction.update({ embeds: [embed] });
+  }
+
+  @ButtonComponent('floater-button')
+  async floaterButton(interaction: ButtonInteraction) {
+    const embed = new MessageEmbed(interaction.message.embeds?.[0]);
+    const fields = embed.fields ?? [];
+    const user = interaction.user.id;
+
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
+    });
+    const dancers = this.parseUsers(result?.dancers);
+    const floaters = this.safeConcat(this.parseUsers(result?.floaters), user);
+    const hosts = this.parseUsers(result?.hosts);
+    const security = this.parseUsers(result?.security);
+    const djs = this.parseUsers(result?.djs);
+    const photographers = this.parseUsers(result?.photographers);
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
+
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { floaters: floaters.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
 
     interaction.update({ embeds: [embed] });
   }
@@ -122,25 +230,40 @@ export class StaffCommands {
   async hostButton(interaction: ButtonInteraction) {
     const embed = new MessageEmbed(interaction.message.embeds?.[0]);
     const fields = embed.fields ?? [];
-    const user = `<@${interaction.user.id}>`;
-    const included = this.hosts.includes(user);
-    let hosts = this.hosts.filter((host) => {
-      return host !== user;
-    });
-    if (!included) {
-      hosts.push(user);
-    }
+    const user = interaction.user.id;
 
-    embed.setFields(
-      fields.map((field) => {
-        if (field.name === 'Hosts') {
-          field.value = `${hosts.length}`;
-        }
-        return field;
-      })
-    );
-    this.hosts = hosts;
-    embed.setDescription(this.formatStaff());
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
+    });
+    const dancers = this.parseUsers(result?.dancers);
+    const floaters = this.parseUsers(result?.floaters);
+    const hosts = this.safeConcat(this.parseUsers(result?.hosts), user);
+    const security = this.parseUsers(result?.security);
+    const djs = this.parseUsers(result?.djs);
+    const photographers = this.parseUsers(result?.photographers);
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
+
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { hosts: hosts.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
 
     interaction.update({ embeds: [embed] });
   }
@@ -149,25 +272,40 @@ export class StaffCommands {
   async securityButton(interaction: ButtonInteraction) {
     const embed = new MessageEmbed(interaction.message.embeds?.[0]);
     const fields = embed.fields ?? [];
-    const user = `<@${interaction.user.id}>`;
-    const included = this.security.includes(user);
-    let security = this.security.filter((sec) => {
-      return sec !== user;
-    });
-    if (!included) {
-      security.push(user);
-    }
+    const user = interaction.user.id;
 
-    embed.setFields(
-      fields.map((field) => {
-        if (field.name === 'Security') {
-          field.value = `${security.length}`;
-        }
-        return field;
-      })
-    );
-    this.security = security;
-    embed.setDescription(this.formatStaff());
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
+    });
+    const dancers = this.parseUsers(result?.dancers);
+    const floaters = this.parseUsers(result?.floaters);
+    const hosts = this.parseUsers(result?.hosts);
+    const security = this.safeConcat(this.parseUsers(result?.security), user);
+    const djs = this.parseUsers(result?.djs);
+    const photographers = this.parseUsers(result?.photographers);
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
+
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { security: security.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
 
     interaction.update({ embeds: [embed] });
   }
@@ -176,25 +314,40 @@ export class StaffCommands {
   async djButton(interaction: ButtonInteraction) {
     const embed = new MessageEmbed(interaction.message.embeds?.[0]);
     const fields = embed.fields ?? [];
-    const user = `<@${interaction.user.id}>`;
-    const included = this.DJs.includes(user);
-    let DJs = this.DJs.filter((DJ) => {
-      return DJ !== user;
-    });
-    if (!included) {
-      DJs.push(user);
-    }
+    const user = interaction.user.id;
 
-    embed.setFields(
-      fields.map((field) => {
-        if (field.name === 'DJs') {
-          field.value = `${DJs.length}`;
-        }
-        return field;
-      })
-    );
-    this.DJs = DJs;
-    embed.setDescription(this.formatStaff());
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
+    });
+    const dancers = this.parseUsers(result?.dancers);
+    const hosts = this.parseUsers(result?.hosts);
+    const floaters = this.parseUsers(result?.floaters);
+    const security = this.parseUsers(result?.security);
+    const djs = this.safeConcat(this.parseUsers(result?.djs), user);
+    const photographers = this.parseUsers(result?.photographers);
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
+
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { djs: djs.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
 
     interaction.update({ embeds: [embed] });
   }
@@ -203,61 +356,160 @@ export class StaffCommands {
   async photographerButton(interaction: ButtonInteraction) {
     const embed = new MessageEmbed(interaction.message.embeds?.[0]);
     const fields = embed.fields ?? [];
-    const user = `<@${interaction.user.id}>`;
-    const included = this.photographers.includes(user);
-    let photographers = this.photographers.filter((photographer) => {
-      return photographer !== user;
-    });
-    if (!included) {
-      photographers.push(user);
-    }
+    const user = interaction.user.id;
 
-    embed.setFields(
-      fields.map((field) => {
-        if (field.name === 'Photographers') {
-          field.value = `${photographers.length}`;
-        }
-        return field;
-      })
+    const result = await prisma.event.findFirst({
+      where: { id: interaction.message.id },
+    });
+    const dancers = this.parseUsers(result?.dancers);
+    const floaters = this.parseUsers(result?.floaters);
+    const hosts = this.parseUsers(result?.hosts);
+    const security = this.parseUsers(result?.security);
+    const djs = this.parseUsers(result?.djs);
+    const photographers = this.safeConcat(
+      this.parseUsers(result?.photographers),
+      user
     );
-    this.photographers = photographers;
-    embed.setDescription(this.formatStaff());
+    const endTime = result?.endTime ?? new Date();
+    const updatedResults = [
+      dancers,
+      floaters,
+      hosts,
+      security,
+      djs,
+      photographers,
+    ];
+
+    await prisma.event.update({
+      where: { id: interaction.message.id },
+      data: { photographers: photographers.join(' ') },
+    });
+
+    embed
+      .setFields(
+        fields.map((field, index) => {
+          field.value = `${updatedResults[index].length}`;
+          return field;
+        })
+      )
+      .setDescription(this.formatStaff(updatedResults, endTime));
 
     interaction.update({ embeds: [embed] });
   }
 
-  private resetFields() {
-    this.dancers = [];
-    this.DJs = [];
-    this.security = [];
-    this.hosts = [];
-    this.photographers = [];
-    this.timestamp = Date.now();
+  private formatStaff(staffList: string[][], endTime: Date) {
+    const formattedStaff = staffList.map((list) => this.formatUsers(list));
+    const date = endTime.getTime();
+    return `**__Dancers__**\n${formattedStaff[0].join(
+      ' '
+    )}\n**__Floaters__**\n${formattedStaff[1].join(
+      ' '
+    )}\n**__Hosts__**\n${formattedStaff[2].join(
+      ' '
+    )}\n**__Security__**\n${formattedStaff[3].join(
+      ' '
+    )}\n**__DJs__**\n${formattedStaff[4].join(
+      ' '
+    )}\n**__Photographers__**\n${formattedStaff[5].join(
+      ' '
+    )}\n**__Deadline__**\n<t:${Math.round(date / 1000)}:R>`;
   }
 
-  private formatStaff() {
-    return `**__Dancers__**\n${this.dancers.join(
-      ' '
-    )}\n**__Hosts__**\n${this.hosts.join(
-      ' '
-    )}\n**__Security__**\n${this.security.join(
-      ' '
-    )}\n**__DJs__**\n${this.DJs.join(
-      ' '
-    )}\n**__Photographers__**\n${this.photographers.join(
-      ' '
-    )}\n**__Event Scheduled__**\n<t:${this.timestamp}:R>`;
+  private parseUsers(usersString?: string) {
+    return usersString?.split(' ').filter((u) => u.length > 1) ?? [];
+  }
+
+  private formatUsers(users: string[]) {
+    return users.map((u) => `<@${u}>`);
   }
 
   private getNextSaturday() {
     const today = new Date();
-    today.setHours(0, 0, 0);
+    const todayUTC = new Date(
+      Date.UTC(today.getFullYear(), today.getMonth(), today.getDate())
+    );
+    const ESToffset = convertToMilli(4, TIME_UNIT.hours);
+    const eventTime =
+      //10:30 PM
+      convertToMilli(22, TIME_UNIT.hours) +
+      convertToMilli(30, TIME_UNIT.minutes);
     //6 === Saturday
-    const diffDays = 6 - today.getDay();
-    const diffMs = diffDays * 24 * 3600 * 1000;
-    const diffUnix = today.getTime() + diffMs;
-    const saturday = new Date(diffUnix);
-    saturday.setHours(22);
-    return saturday;
+    const diffDays = 6 - todayUTC.getUTCDay();
+    const diffMs = convertToMilli(diffDays, TIME_UNIT.days) + eventTime;
+    const diffUnix = todayUTC.getTime() + diffMs + ESToffset;
+    return new Date(diffUnix);
+  }
+
+  private safeConcat(target: string[], value: string) {
+    if (target?.length > 0) {
+      if (target.includes(value)) {
+        return target.filter((u) => u !== value);
+      } else {
+        return target.concat(value);
+      }
+    }
+    return [value];
+  }
+
+  private async getCurrentEvent() {
+    return await prisma.event.findFirst({
+      where: {
+        endTime: {
+          gt: new Date(),
+        },
+      },
+    });
+  }
+
+  private warnUser(interaction: CommandInteraction, event: Event) {
+    const cancelButton = new MessageButton()
+      .setLabel('Cancel Event')
+      .setStyle('DANGER')
+      .setCustomId('cancel-button');
+
+    const keepButton = new MessageButton()
+      .setLabel('Keep Event')
+      .setStyle('SUCCESS')
+      .setCustomId('keep-button');
+
+    const row = new MessageActionRow().addComponents(keepButton, cancelButton);
+
+    interaction.reply({
+      ephemeral: true,
+      content: `There is already an upcoming event scheduled ${
+        event.endTime
+          ? `<t:${Math.round(event.endTime.getTime() / 1000)}:R>!`
+          : '!'
+      }\nDo you want to cancel it?`,
+      components: [row],
+    });
+  }
+
+  @ButtonComponent('cancel-button')
+  async cancelButton(interaction: ButtonInteraction) {
+    const event = await this.getCurrentEvent();
+    if (!event) return;
+    await prisma.event.delete({
+      where: {
+        id: event?.id,
+      },
+    });
+
+    await interaction.channel?.messages.delete(
+      await interaction.channel?.messages.fetch(event.id)
+    );
+
+    interaction.update({
+      content: 'Event cancelled!',
+      components: [],
+    });
+  }
+
+  @ButtonComponent('keep-button')
+  async confirmButton(interaction: ButtonInteraction) {
+    interaction.update({
+      content: 'Keeping event.',
+      components: [],
+    });
   }
 }
