@@ -26,7 +26,7 @@ export class StaffCommands {
       return;
     }
 
-    const currentEvent = await this.getCurrentEvent();
+    const currentEvent = await this.getCurrentEvent(interaction.guildId);
     if (currentEvent) {
       this.warnUser(interaction, currentEvent);
       return;
@@ -36,6 +36,7 @@ export class StaffCommands {
         endTime: {
           lt: new Date(),
         },
+        guildId: interaction.guildId,
       },
       orderBy: {
         id: 'desc',
@@ -451,12 +452,13 @@ export class StaffCommands {
     return [value];
   }
 
-  private async getCurrentEvent() {
+  private async getCurrentEvent(guildId: string) {
     return await prisma.event.findFirst({
       where: {
         endTime: {
           gt: new Date(),
         },
+        guildId,
       },
     });
   }
@@ -487,7 +489,8 @@ export class StaffCommands {
 
   @ButtonComponent('cancel-button')
   async cancelButton(interaction: ButtonInteraction) {
-    const event = await this.getCurrentEvent();
+    if (!interaction.guildId) return;
+    const event = await this.getCurrentEvent(interaction.guildId);
     if (!event) return;
     await prisma.event.delete({
       where: {

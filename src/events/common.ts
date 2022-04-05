@@ -19,6 +19,8 @@ export abstract class AppDiscord {
         id: guild.id,
       },
     });
+    await client.initApplicationCommands();
+    await client.initApplicationPermissions();
     console.log(`Joined server "${guild.name}"`);
   }
 
