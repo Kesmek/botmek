@@ -144,6 +144,17 @@ class Verify {
               ],
             },
             {
+              id: interaction.guild?.roles.cache.find((_role) => _role.permissions.has(
+                ["BAN_MEMBERS"],
+                false,
+              ))!,
+              allow: [
+                Permissions.FLAGS.VIEW_CHANNEL,
+                Permissions.FLAGS.SEND_MESSAGES,
+                Permissions.FLAGS.READ_MESSAGE_HISTORY,
+              ],
+            },
+            {
               id: client.user?.id!,
               allow: ["VIEW_CHANNEL"],
             },

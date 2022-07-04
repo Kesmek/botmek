@@ -119,7 +119,7 @@ export class GuildUtils {
   ) {
     const members = await interaction.guild?.members.fetch({ force: true });
     return members?.filter((member) => !member.user.bot && member.permissions.has(
-      ["ADMINISTRATOR", "BAN_MEMBERS"]));
+      ["BAN_MEMBERS"]));
   }
 
   public static stringifyMembers(members?: Collection<string, GuildMember>) {
