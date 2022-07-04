@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="chore: Use More Robust Async Upsert Algorithm">
+      <change afterPath="$PROJECT_DIR$/.idea/botmek.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/OnReady.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/OnReady.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="package.json" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
+  <component name="ProjectId" id="2Ap4KPn5ezWAZy72gpDjZoWWHwO" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "code.cleanup.on.save": "true",
+    "jdk.selected.JAVA_MODULE": "18",
+    "last_opened_file_path": "/home/justin/Development/Personal/botmek",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/home/justin/Development/Personal/botmek/node_modules/prettier",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "ts.external.directory.path": "/home/justin/Development/Personal/botmek/node_modules/typescript/lib"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/.idea" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="botmek" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="botmek" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="" />
+      <created>1655693127851</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1655693127851</updated>
+      <workItem from="1655693129201" duration="448000" />
+      <workItem from="1655694473550" duration="2024000" />
+      <workItem from="1655697838106" duration="419000" />
+      <workItem from="1655698265866" duration="10000" />
+      <workItem from="1655924946136" duration="403000" />
+      <workItem from="1655925354751" duration="532000" />
+      <workItem from="1655930549731" duration="39000" />
+      <workItem from="1655930617181" duration="1259000" />
+      <workItem from="1655932795120" duration="599000" />
+      <workItem from="1655952631096" duration="580000" />
+      <workItem from="1656566863964" duration="7000" />
+      <workItem from="1656902935059" duration="3835000" />
+      <workItem from="1656912372258" duration="123000" />
+      <workItem from="1656912500993" duration="79000" />
+      <workItem from="1656912586143" duration="12000" />
+      <workItem from="1656912603987" duration="9000" />
+      <workItem from="1656912628998" duration="1044000" />
+      <workItem from="1656913749582" duration="465000" />
+      <workItem from="1656914224640" duration="39000" />
+      <workItem from="1656914270100" duration="52000" />
+      <workItem from="1656914328270" duration="1447000" />
+    </task>
+    <task id="LOCAL-00001" summary="chore: Upgrade Yarn">
+      <created>1656903593080</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1656903593080</updated>
+    </task>
+    <task id="LOCAL-00002" summary="refactor: Complete Rewrite from Scratch">
+      <created>1656903709367</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1656903709367</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix: Update old .env File">
+      <created>1656905677137</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1656905677137</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fix: Use Docker Hub over Google Artifact Repository">
+      <created>1656905695095</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1656905695095</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix: Remove Unsafe .env File">
+      <created>1656905839704</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1656905839704</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="chore: Upgrade Yarn" />
+    <MESSAGE value="refactor: Complete Rewrite from Scratch" />
+    <MESSAGE value="fix: Update old .env File" />
+    <MESSAGE value="fix: Use Docker Hub over Google Artifact Repository" />
+    <MESSAGE value="fix: Remove Unsafe .env File" />
+    <MESSAGE value="chore: Use More Robust Async Upsert Algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: Use More Robust Async Upsert Algorithm" />
+  </component>
+</project>

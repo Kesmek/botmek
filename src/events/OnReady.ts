@@ -12,29 +12,26 @@ export class OnReady {
   }
 
   public async initAppCommands(client: Client): Promise<void> {
-    await client.initApplicationCommands();
-    return client.initGlobalApplicationCommands({
-      log: true,
-    });
+    return await client.initApplicationCommands();
   }
 
   @Once("ready")
   private async initialize([client]: [Client]) {
     this.initDi();
     await this.initAppCommands(client);
-    client.guilds.cache.each(async (guild) => {
+    for (const [guildId, _] of client.guilds.cache) {
       await this._prisma.guild.upsert({
-        create: {
-          id: guild.id,
-        },
         where: {
-          id: guild.id,
+          id: guildId,
+        },
+        create: {
+          id: guildId,
         },
         update: {
-          id: guild.id,
+          id: guildId,
         },
       });
-    });
+    }
   };
 
   @On("interactionCreate")
