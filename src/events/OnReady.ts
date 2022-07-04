@@ -19,7 +19,7 @@ export class OnReady {
   private async initialize([client]: [Client]) {
     this.initDi();
     await this.initAppCommands(client);
-    for (const [guildId, _] of client.guilds.cache) {
+    for (const guildId of client.guilds.cache.keys()) {
       await this._prisma.guild.upsert({
         where: {
           id: guildId,
