@@ -140,6 +140,7 @@ class Verify {
               allow: [
                 Permissions.FLAGS.VIEW_CHANNEL,
                 Permissions.FLAGS.SEND_MESSAGES,
+                Permissions.FLAGS.READ_MESSAGE_HISTORY
               ],
             },
             {

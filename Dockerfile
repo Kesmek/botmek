@@ -16,7 +16,6 @@ COPY tsconfig.json .
 COPY prisma/schema.prisma ./prisma/schema.prisma
 COPY .env .
 RUN npx prisma db push
-RUN npx prisma generate
 
 # Build project
 RUN npm run build
@@ -38,7 +37,6 @@ COPY --from=build-runner /tmp/app/build /app/build
 COPY --from=build-runner /tmp/app/prisma /app/prisma
 COPY --from=build-runner /tmp/app/.env /app/.env
 RUN npx prisma db push
-RUN npx prisma generate
 
 # Start bot
 CMD [ "node", "build/main.js" ]
