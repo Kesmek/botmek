@@ -122,7 +122,7 @@ class Verify {
         },
       });
       const {
-        verificationCategory: verificationCategoryID, verifiedRole,
+        verificationCategory: verificationCategoryID,
       } = guildInfo!;
 
       const verificationCategory = <CategoryChannel>interaction.guild?.channels.cache.get(
@@ -140,7 +140,7 @@ class Verify {
               allow: [
                 Permissions.FLAGS.VIEW_CHANNEL,
                 Permissions.FLAGS.SEND_MESSAGES,
-                Permissions.FLAGS.READ_MESSAGE_HISTORY
+                Permissions.FLAGS.READ_MESSAGE_HISTORY,
               ],
             },
             {
@@ -154,8 +154,6 @@ class Verify {
 
       const embed = await EmbedUtils.createVerifyEmbed(
         interaction,
-        channel,
-        verifiedRole!,
       );
 
       const verificationButton = new MessageButton()
