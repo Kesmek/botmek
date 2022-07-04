@@ -324,9 +324,9 @@ export class Application {
         content: "All staff positions are currently **__closed__**. Please" +
           " check in later to see if any availabilities open up.",
       });
-    } else if (buttons.length <= 4) {
-      actionRow.addComponents(buttons.slice(0, 4));
-    } else {
+    }
+    actionRow.addComponents(buttons.slice(0, 4));
+    if (buttons.length > 4) {
       actionRow2.addComponents(buttons.slice(4));
     }
 

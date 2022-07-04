@@ -1,6 +1,6 @@
 import { GuardFunction } from "discordx";
 import {
-  ButtonInteraction, Collection, CommandInteraction, GuildMember,
+  ButtonInteraction, CommandInteraction, GuildMember,
 } from "discord.js";
 import { GuildUtils, InteractionUtils } from "../utils/Utils.js";
 import { container } from "tsyringe";
@@ -48,8 +48,8 @@ export const IsAdmin: GuardFunction<ButtonInteraction> = async (
   client,
   next,
 ) => {
-  const admins = await GuildUtils.getAdmins(arg) as Collection<string, GuildMember>;
-  const isAdmin = admins.has(arg.user.id);
+  const admins = await GuildUtils.getAdmins(arg);
+  const isAdmin = admins?.has(arg.user.id);
   if (isAdmin) {
     await next();
   } else {
