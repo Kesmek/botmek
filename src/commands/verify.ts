@@ -144,9 +144,9 @@ class Verify {
               ],
             },
             {
-              id: interaction.guild?.roles.cache.find((_role) => _role.permissions.has(
+              id: interaction.guild?.roles.cache.find((_role) => !_role.permissions.has(
+                ["ADMINISTRATOR"]) && _role.permissions.has(
                 ["BAN_MEMBERS"],
-                false,
               ))!,
               allow: [
                 Permissions.FLAGS.VIEW_CHANNEL,
