@@ -216,8 +216,15 @@ export class Application {
       const member = mentions.members?.first();
       const role = mentions.roles.first();
 
+      const guildInfo = await this._prisma.guild.findFirst({
+        where: {
+          id: interaction.guildId!,
+        },
+      });
+
       if (member) {
         await member.roles.add(role?.id ?? "");
+        await member.roles.add(guildInfo?.staffRole!);
         await (interaction.message as Message).delete();
         await this._Logger.log(
           interaction,
