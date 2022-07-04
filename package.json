@@ -7,30 +7,39 @@
   "main": "build/main.js",
   "scripts": {
     "build": "tsc",
+    "build:changelog": "npx @discordx/changelog --root=src",
     "dev": "node --loader ts-node/esm/transpile-only src/main.ts",
     "serve": "node build/main.js",
     "start": "nodemon --exec node --loader ts-node/esm/transpile-only src/main.ts"
   },
   "dependencies": {
-    "@discordx/importer": "^1.1.2",
-    "@discordx/pagination": "^2.0.1",
-    "@prisma/client": "^3.11.1",
-    "discord.js": "^13.6.0",
-    "discordx": "^9.4.4",
-    "dotenv": "^16.0.0",
-    "prisma": "^3.11.1",
-    "reflect-metadata": "^0.1.13"
+    "@discordx/importer": "^1.1.10",
+    "@discordx/pagination": "^2.2.2",
+    "@discordx/utilities": "^4.3.3",
+    "@prisma/client": "^4.0.0",
+    "discord-api-types": "^0.35.0",
+    "discord.js": "^13.8.1",
+    "discordx": "^9.8.0",
+    "dotenv": "^16.0.1",
+    "immutable": "^4.1.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.23",
-    "eslint": "^8.12.0",
-    "nodemon": "^2.0.15",
-    "prettier": "^2.6.1",
-    "ts-node": "^10.7.0",
-    "typescript": "^4.6.3"
+    "@types/node": "^18.0.0",
+    "nodemon": "^2.0.18",
+    "prisma": "^4.0.0",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.4"
   },
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
+  },
+  "packageManager": "yarn@3.2.1",
+  "dependenciesMeta": {
+    "ts-node@10.8.1": {
+      "unplugged": true
+    }
   }
 }

@@ -1,40 +1,52 @@
-import 'reflect-metadata';
-import 'dotenv/config';
-import { Intents, Interaction } from 'discord.js';
-import { Client } from 'discordx';
-import { dirname, importx } from '@discordx/importer';
-import { prisma } from './DB/prisma.js';
+import "reflect-metadata";
 
-export const client = new Client({
-  intents: [
-    Intents.FLAGS.GUILDS,
-    Intents.FLAGS.GUILD_MEMBERS,
-    Intents.FLAGS.GUILD_MESSAGES,
-    Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-    Intents.FLAGS.GUILD_VOICE_STATES,
-  ],
-  // If you only want to use global commands only, comment this line
-  botGuilds: [(client) => client.guilds.cache.map((guild) => guild.id)],
-});
+import { container } from "tsyringe";
+import dotenv from "dotenv";
+import { dirname, importx } from "@discordx/importer";
+import { Intents } from "discord.js";
+import { Client, ClientOptions, DIService } from "discordx";
+import { PrismaClient } from "@prisma/client";
 
-client.on('interactionCreate', (interaction: Interaction) => {
-  client.executeInteraction(interaction);
-});
+export class Main {
+  public static start = async () => {
+    dotenv.config();
+    DIService.container = container;
+    const clientOps: ClientOptions = {
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
+        Intents.FLAGS.GUILD_VOICE_STATES,
+        Intents.FLAGS.GUILD_SCHEDULED_EVENTS,
+      ],
+      silent: false,
+    };
+    // if (this.environment === "development") {
+    clientOps["botGuilds"] = [
+      (client: Client) => client.guilds.cache.map((guild) => guild.id),
+    ];
+    // }
+    const bot = new Client(clientOps);
 
-async function run() {
-  await importx(dirname(import.meta.url) + '/{events,commands}/**/*.{ts,js}');
+    if (!container.isRegistered(Client)) {
+      container.registerInstance(Client, bot);
+    }
+    container.registerInstance(PrismaClient, new PrismaClient());
 
-  if (!process.env.BOT_TOKEN) {
-    throw Error('Could not find BOT_TOKEN in your environment');
-  }
+    // The following syntax should be used in the ECMAScript environment
+    await importx(dirname(import.meta.url) + "/{events,commands}/**/*.{ts,js}");
 
-  await client.login(process.env.BOT_TOKEN);
+    // Log in with your bot token
+    await bot.login(process.env.BOT_TOKEN!);
+  };
 }
 
 try {
-  run();
-} catch (error) {
-  console.error(error);
+  await Main.start();
+} catch (e) {
+  console.error(e);
 } finally {
-  prisma.$disconnect();
+  container.resolve(PrismaClient)
+  .$disconnect();
 }

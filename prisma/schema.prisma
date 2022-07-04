@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,34 +11,27 @@ datasource db {
 }
 
 model Guild {
-  id        String    @id
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  commands  Command[]
-  events    Event[]
+  id                   String           @id
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  verificationCategory String?
+  verifiedRole         String?
+  staffRole            String?
+  moderationChannel    String?
+  signupChannel        String?
+  applicationChannel   String?
+  events               ScheduledEvent[]
 }
 
-model Command {
-  id                  Int     @id @default(autoincrement())
-  name                String
-  guildId             String
-  enabled             Boolean @default(true)
-  whitelistedRoles    String
-  whitelistedChannels String
-  guild               Guild   @relation(fields: [guildId], references: [id], onDelete: Cascade)
-}
-
-model Event {
-  id            String    @id
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  endTime       DateTime?
-  dancers       String
-  floaters      String
-  security      String
-  hosts         String
-  djs           String
-  photographers String
+model ScheduledEvent {
+  id            String  @id
   guildId       String
-  guild         Guild     @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  Guild         Guild   @relation(fields: [guildId], references: [id], onDelete: Cascade)
+  dancers       String?
+  floaters      String?
+  security      String?
+  hosts         String?
+  djs           String?
+  photographers String?
+  messageId     String  @unique @default("")
 }

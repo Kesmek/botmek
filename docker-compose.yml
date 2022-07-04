@@ -1,0 +1,12 @@
+services:
+  app:
+    build: .
+    image: us-central1-docker.pkg.dev/botmek/botmek-docker/botmek:latest
+    command: node build/main.js
+    volumes:
+      - db:/etc/botmek
+    restart: on-failure
+    container_name: botmek
+
+volumes:
+  db:
