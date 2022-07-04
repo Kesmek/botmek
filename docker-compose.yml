@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    image: us-central1-docker.pkg.dev/botmek/botmek-docker/botmek:latest
+    image: kesmek/botmek:latest
     command: node build/main.js
     volumes:
       - db:/etc/botmek
