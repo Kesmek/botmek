@@ -57,12 +57,9 @@ export class EmbedUtils {
 
   public static async createVerifyEmbed(
     interaction: Interaction,
-    channel: TextChannel,
-    verifiedRole: string,
   ) {
-    const admins = channel.members.filter((member) => !member.user.bot && member.roles.cache.has(
-      verifiedRole!));
-    const adminsString = GuildUtils.stringifyMembers(admins);
+    const adminsString = GuildUtils.stringifyMembers(await GuildUtils.getAdmins(
+      interaction));
     return new MessageEmbed()
     .setTitle("Verification Instructions")
     .setImage(
