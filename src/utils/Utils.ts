@@ -1,7 +1,15 @@
 import {
-  BaseCommandInteraction, ButtonInteraction, Collection, CommandInteraction,
-  GuildMember, Interaction, InteractionReplyOptions,
-  MessageComponentInteraction, MessageEmbed, TextChannel,
+  BaseCommandInteraction,
+  ButtonInteraction,
+  Collection,
+  CommandInteraction,
+  GuildMember,
+  Interaction,
+  InteractionReplyOptions,
+  MessageComponentInteraction,
+  MessageEmbed,
+  TextChannel,
+  User,
 } from "discord.js";
 import { ModerationActions } from "./Constants.js";
 import { ArgsOf } from "discordx";
@@ -128,6 +136,14 @@ export class GuildUtils {
     }
     return members?.map((member) => `${member.user} (${member.user.username}#${member.user.discriminator})`)
     .join(", ");
+  }
+
+  public static safeMention(user: User | GuildMember) {
+    if (user instanceof User) {
+      return `${user} (${user.tag})`;
+    } else {
+      return `${user.user} (${user.user.tag})`;
+    }
   }
 
   public static async verifyUser(

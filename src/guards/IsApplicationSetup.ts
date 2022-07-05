@@ -15,7 +15,7 @@ export const IsApplicationSetup: GuardFunction<ButtonInteraction> = async (
       id: arg.guild?.id,
     },
   });
-  if (guildInfo?.applicationChannel) {
+  if (guildInfo?.applicationChannel && guildInfo?.staffRole) {
     await next();
   } else {
     await InteractionUtils.replyOrFollowUp(arg, {

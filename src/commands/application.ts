@@ -10,7 +10,7 @@ import {
 import { injectable } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
 import { Logger } from "../utils/Logger.js";
-import { InteractionUtils } from "../utils/Utils.js";
+import { GuildUtils, InteractionUtils } from "../utils/Utils.js";
 import { ModerationActions } from "../utils/Constants.js";
 import { IsApplicationSetup } from "../guards/IsApplicationSetup.js";
 
@@ -195,7 +195,7 @@ export class Application {
         ephemeral: true,
       });
       await applicationsChannel.send({
-        content: `${interaction.user} submitted an application for ${role}\n\n` +
+        content: `${GuildUtils.safeMention(interaction.user)} submitted an application for ${role}\n\n` +
           `**Why:** ${why}\n\n**Experience:** ${experience}\n\n` +
           `**Availabilities:** ${availabilities}\n\n**VR Setup:** ${vrType}`,
         components: [
