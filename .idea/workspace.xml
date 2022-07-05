@@ -4,8 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="chore: Use More Robust Async Upsert Algorithm">
-      <change beforePath="$PROJECT_DIR$/src/events/OnReady.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/OnReady.ts" afterDir="false" />
+    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="fix: Application Accept Not Giving User the Staff Role">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/commands/application.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/application.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/guards/IsApplicationSetup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/guards/IsApplicationSetup.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +32,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="OptimizeOnSaveOptions">
+    <option name="myRunOnSave" value="true" />
+  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
@@ -44,10 +51,11 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "code.cleanup.on.save": "true",
     "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "/home/justin/Development/Personal/botmek",
+    "last_opened_file_path": "/home/justin/Development/Odyssey/react-frontend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -55,7 +63,7 @@
     "nodejs_package_manager_path": "npm",
     "prettierjs.PrettierConfiguration.Package": "/home/justin/Development/Personal/botmek/node_modules/prettier",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
+    "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "/home/justin/Development/Personal/botmek/node_modules/typescript/lib"
@@ -65,21 +73,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/.idea" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="botmek" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="botmek" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -109,7 +102,11 @@
       <workItem from="1656913749582" duration="465000" />
       <workItem from="1656914224640" duration="39000" />
       <workItem from="1656914270100" duration="52000" />
-      <workItem from="1656914328270" duration="1495000" />
+      <workItem from="1656914328270" duration="1809000" />
+      <workItem from="1656945857777" duration="3387000" />
+      <workItem from="1656954415829" duration="1129000" />
+      <workItem from="1656961327792" duration="396000" />
+      <workItem from="1657047151009" duration="689000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Upgrade Yarn">
       <created>1656903593080</created>
@@ -153,7 +150,63 @@
       <option name="project" value="LOCAL" />
       <updated>1656915777637</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="chore: Use More Robust Async Upsert Algorithm">
+      <created>1656915841517</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1656915841517</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix: Users Unable to Read Message History of Verification Channels">
+      <created>1656947060399</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1656947060399</updated>
+    </task>
+    <task id="LOCAL-00009" summary="fix: Use Proper Admin Fetching System">
+      <created>1656947294750</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1656947294750</updated>
+    </task>
+    <task id="LOCAL-00010" summary="fix: Call Util Function With Correct Args">
+      <created>1656947375572</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1656947375572</updated>
+    </task>
+    <task id="LOCAL-00011" summary="feat: Expand Roles That May Verify a User">
+      <created>1656948240212</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1656948240212</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix: Roles Missing Access to Channels That They Should Have Access To">
+      <created>1656949402404</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1656949402404</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix: Application Setup Failing for &gt;4 Roles">
+      <created>1656955034580</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1656955034580</updated>
+    </task>
+    <task id="LOCAL-00014" summary="fix: Application Accept Not Giving User the Staff Role">
+      <created>1656955374962</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1656955374962</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -178,6 +231,13 @@
     <MESSAGE value="fix: Use Docker Hub over Google Artifact Repository" />
     <MESSAGE value="fix: Remove Unsafe .env File" />
     <MESSAGE value="chore: Use More Robust Async Upsert Algorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: Use More Robust Async Upsert Algorithm" />
+    <MESSAGE value="fix: Users Unable to Read Message History of Verification Channels" />
+    <MESSAGE value="fix: Use Proper Admin Fetching System" />
+    <MESSAGE value="fix: Call Util Function With Correct Args" />
+    <MESSAGE value="feat: Expand Roles That May Verify a User" />
+    <MESSAGE value="fix: Roles Missing Access to Channels That They Should Have Access To" />
+    <MESSAGE value="fix: Application Setup Failing for &gt;4 Roles" />
+    <MESSAGE value="fix: Application Accept Not Giving User the Staff Role" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: Application Accept Not Giving User the Staff Role" />
   </component>
 </project>
