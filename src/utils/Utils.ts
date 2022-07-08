@@ -150,7 +150,7 @@ export class GuildUtils {
     interaction: ButtonInteraction | CommandInteraction,
     _prisma: PrismaClient,
   ) {
-
+    await interaction.deferReply();
     const channel = interaction.channel as TextChannel;
     const guildInfo = await _prisma.guild.findFirst({
       where: {
@@ -179,11 +179,13 @@ export class GuildUtils {
         await modChannel.send({
           embeds: [embed],
         });
-        await interaction.reply({ content: "User verified. Closing this ticket..." });
-
+        await InteractionUtils.replyOrFollowUp(
+          interaction,
+          { content: "User verified. Closing this ticket..." },
+        );
       }
     } else {
-      await interaction.reply({
+      await InteractionUtils.replyOrFollowUp(interaction, {
         content: "Could not find user to verify in this channel! Please let" +
           " the bot owner <@211505087653085184> (Kesmek#0001) know what" +
           " happened so they can issue a fix.",
