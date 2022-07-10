@@ -1,19 +1,34 @@
 import {
-  ButtonComponent, Client, Discord, Guard, Slash, SlashOption,
+  ButtonComponent,
+  Client,
+  Discord,
+  Guard,
+  Slash,
+  SlashOption,
 } from "discordx";
 import {
-  ButtonInteraction, CategoryChannel, Channel, CommandInteraction, GuildMember,
-  MessageActionRow, MessageButton, Permissions, Role,
+  ButtonInteraction,
+  CategoryChannel,
+  Channel,
+  CommandInteraction,
+  GuildMember,
+  MessageActionRow,
+  MessageButton,
+  Permissions,
+  Role,
 } from "discord.js";
 import { EmbedUtils, GuildUtils, InteractionUtils } from "../utils/Utils.js";
 import { Category } from "@discordx/utilities";
 import {
-  MinorKickedMessage, VerificationSetupMessage,
+  MinorKickedMessage,
+  VerificationSetupMessage,
 } from "../utils/Constants.js";
 import { injectable } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
 import {
-  IsAdmin, IsUnverified, IsVerificationSetup,
+  IsAdmin,
+  IsUnverified,
+  IsVerificationSetup,
 } from "../guards/Verification.js";
 
 @Discord()
@@ -141,6 +156,7 @@ class Verify {
                 Permissions.FLAGS.VIEW_CHANNEL,
                 Permissions.FLAGS.SEND_MESSAGES,
                 Permissions.FLAGS.READ_MESSAGE_HISTORY,
+                Permissions.FLAGS.ATTACH_FILES,
               ],
             },
             {
@@ -152,6 +168,7 @@ class Verify {
                 Permissions.FLAGS.VIEW_CHANNEL,
                 Permissions.FLAGS.SEND_MESSAGES,
                 Permissions.FLAGS.READ_MESSAGE_HISTORY,
+                Permissions.FLAGS.ATTACH_FILES,
               ],
             },
             {
