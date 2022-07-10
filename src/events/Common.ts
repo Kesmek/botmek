@@ -121,8 +121,8 @@ export class Common {
           id: oldEvent.id,
         },
       });
-      const signupChannel = newEvent.guild?.channels.cache.get(guildInfo?.signupChannel!) as TextChannel;
-      const message = signupChannel.messages.cache.get(updatedEvent?.messageId!);
+      const signupChannel = await newEvent.guild?.channels.fetch(guildInfo?.signupChannel!) as TextChannel | null;
+      const message = await signupChannel?.messages.fetch(updatedEvent?.messageId!);
       await message?.edit({ components: [] });
     }
     if (newEvent.isCompleted() || newEvent.isCanceled()) {
