@@ -18,11 +18,10 @@ export const IsRegisterable: GuardFunction<ButtonInteraction> = async (
       },
     });
     const event = await arg.guild?.scheduledEvents.fetch(scheduledEvent?.id!);
-    if (event?.isScheduled()) {
+    if (scheduledEvent && event?.isScheduled()) {
       const deadline = new Date(event?.scheduledStartAt!);
       //12 Hours in advance
       deadline.setTime(deadline.getTime() - TimeUnits.Hour * 12);
-      console.log(deadline);
       if (deadline.getTime() < Date.now()) {
         await (arg.message as Message).edit({ components: [] });
         return await InteractionUtils.replyOrFollowUp(arg, {
