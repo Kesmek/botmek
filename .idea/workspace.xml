@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="fix: Application Accept Not Giving User the Staff Role">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="Fix: Allow Verifying Users to Attach Files">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/commands/application.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/commands/application.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/guards/IsApplicationSetup.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/guards/IsApplicationSetup.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/Common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/Common.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,29 +44,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "code.cleanup.on.save": "true",
-    "jdk.selected.JAVA_MODULE": "18",
-    "last_opened_file_path": "/home/justin/Development/Odyssey/react-frontend",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "prettierjs.PrettierConfiguration.Package": "/home/justin/Development/Personal/botmek/node_modules/prettier",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "actions.on.save",
-    "ts.external.directory.path": "/home/justin/Development/Personal/botmek/node_modules/typescript/lib"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/justin/Development/Personal/botmek&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;prettierjs.PrettierConfiguration.Package&quot;: &quot;/home/justin/Development/Personal/botmek/node_modules/prettier&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/justin/Development/Personal/botmek/node_modules/typescript/lib&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/.idea" />
@@ -106,7 +104,11 @@
       <workItem from="1656945857777" duration="3387000" />
       <workItem from="1656954415829" duration="1129000" />
       <workItem from="1656961327792" duration="396000" />
-      <workItem from="1657047151009" duration="689000" />
+      <workItem from="1657047151009" duration="967000" />
+      <workItem from="1657048126371" duration="14000" />
+      <workItem from="1657314144405" duration="1066000" />
+      <workItem from="1657327871722" duration="77000" />
+      <workItem from="1657472789940" duration="750000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Upgrade Yarn">
       <created>1656903593080</created>
@@ -206,7 +208,35 @@
       <option name="project" value="LOCAL" />
       <updated>1656955374962</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="chore: Update .idea Config Files">
+      <created>1657047946407</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1657047946407</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Feat: Add safeMention Function To Safely Mention a User if Not Cached">
+      <created>1657047990725</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1657047990725</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Fix: Interaction Failing Early Because It Was Not Deferred">
+      <created>1657314605696</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1657314605696</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Fix: Allow Verifying Users to Attach Files">
+      <created>1657472896885</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1657472896885</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,6 +268,10 @@
     <MESSAGE value="fix: Roles Missing Access to Channels That They Should Have Access To" />
     <MESSAGE value="fix: Application Setup Failing for &gt;4 Roles" />
     <MESSAGE value="fix: Application Accept Not Giving User the Staff Role" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: Application Accept Not Giving User the Staff Role" />
+    <MESSAGE value="chore: Update .idea Config Files" />
+    <MESSAGE value="Feat: Add safeMention Function To Safely Mention a User if Not Cached" />
+    <MESSAGE value="Fix: Interaction Failing Early Because It Was Not Deferred" />
+    <MESSAGE value="Fix: Allow Verifying Users to Attach Files" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: Allow Verifying Users to Attach Files" />
   </component>
 </project>

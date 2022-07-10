@@ -4,6 +4,7 @@ import { EmbedUtils } from "../utils/Utils.js";
 import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import { injectable } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
+import { TimeUnits } from "../utils/Constants";
 
 @Discord()
 @injectable()
@@ -86,7 +87,10 @@ export class Common {
         embeds: [embed],
         content: `<@&${staffRole}> Signups are open!\nPlease register for a position as soon as ` +
           `possible so the organizers can plan everything appropriately.\nThis event is scheduled to` +
-          ` start <t:${Math.round(event.scheduledStartTimestamp! / 1000)}:R>`,
+          ` start on <t:${Math.round(event.scheduledStartTimestamp! / 1000)}>` +
+          `(<t:${Math.round(event.scheduledStartTimestamp! / 1000)}:R>)\n\n` +
+          `**Note:** Registrations close 12 hours before the start of the event ` +
+          `(<t:${Math.round((event.scheduledStartTimestamp! - TimeUnits.Hour * 12) / 1000)}:R>).`,
         components: [row1, row2],
       });
 

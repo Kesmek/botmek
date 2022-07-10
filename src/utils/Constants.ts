@@ -27,3 +27,11 @@ export enum ModerationActions {
   Promotion = "Promoted User ⬆",
   Verification = "Verified User ✅",
 }
+
+export enum TimeUnits {
+  Milli = 1,
+  Second = Milli * 1000,
+  Minute = Second * 60,
+  Hour = Minute * 60,
+  Day = Hour * 24,
+}
