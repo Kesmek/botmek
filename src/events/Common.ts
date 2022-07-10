@@ -4,7 +4,7 @@ import { EmbedUtils } from "../utils/Utils.js";
 import { MessageActionRow, MessageButton, TextChannel } from "discord.js";
 import { injectable } from "tsyringe";
 import { PrismaClient } from "@prisma/client";
-import { TimeUnits } from "../utils/Constants";
+import { TimeUnits } from "../utils/Constants.js";
 
 @Discord()
 @injectable()
