@@ -165,9 +165,9 @@ export class GuildUtils {
     const unverifiedMember = await interaction.guild?.members.fetch(channel.name);
 
     if (unverifiedMember) {
-      await unverifiedMember.send({ content: `You have been verified in **${interaction.guild?.name}**! You can now see the full server and interact with the community.` });
       await unverifiedMember.roles.add(guildInfo?.verifiedRole!);
       await channel?.delete();
+      await unverifiedMember.send({ content: `You have been verified in **${interaction.guild?.name}**! You can now see the full server and interact with the community.` });
       if (guildInfo?.moderationChannel) {
         const modChannel = interaction.guild?.channels.cache.get(guildInfo?.moderationChannel) as TextChannel;
         const embed = EmbedUtils.createLogEmbed(

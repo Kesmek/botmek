@@ -42,6 +42,7 @@ export class OnReady {
     try {
       await client.executeInteraction(interaction);
     } catch (e) {
+      console.error(e);
       if (interaction.isApplicationCommand() ||
         interaction.isMessageComponent()) {
         return InteractionUtils.replyOrFollowUp(
