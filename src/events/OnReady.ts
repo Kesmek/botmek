@@ -12,6 +12,7 @@ export class OnReady {
   }
 
   public async initAppCommands(client: Client): Promise<void> {
+    await client.initGlobalApplicationCommands();
     return await client.initApplicationCommands();
   }
 

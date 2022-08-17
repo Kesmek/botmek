@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="Fix: Allow Verifying Users to Attach Files">
+    <list default="true" id="f5d65ac7-2e99-449b-b64d-41bb35c40884" name="Changes" comment="Chore: Log Errors More Explicitly">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/events/Common.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/Common.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/Constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/events/OnReady.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/events/OnReady.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Utils.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +53,7 @@
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;code.cleanup.on.save&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/justin/Development/Personal/botmek&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/justin/Development/Personal/test&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -108,7 +108,19 @@
       <workItem from="1657048126371" duration="14000" />
       <workItem from="1657314144405" duration="1066000" />
       <workItem from="1657327871722" duration="77000" />
-      <workItem from="1657472789940" duration="750000" />
+      <workItem from="1657472789940" duration="957000" />
+      <workItem from="1657475062372" duration="1302000" />
+      <workItem from="1657593136230" duration="612000" />
+      <workItem from="1657769470156" duration="2069000" />
+      <workItem from="1657850793216" duration="18000" />
+      <workItem from="1657983322195" duration="1024000" />
+      <workItem from="1658285055861" duration="115000" />
+      <workItem from="1658352548526" duration="16000" />
+      <workItem from="1658427017359" duration="308000" />
+      <workItem from="1658427349288" duration="158000" />
+      <workItem from="1658427525423" duration="698000" />
+      <workItem from="1658428967698" duration="69000" />
+      <workItem from="1660702101650" duration="1574000" />
     </task>
     <task id="LOCAL-00001" summary="chore: Upgrade Yarn">
       <created>1656903593080</created>
@@ -236,7 +248,35 @@
       <option name="project" value="LOCAL" />
       <updated>1657472896885</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Chore: Make Event Deadline More Obvious">
+      <created>1657473567920</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1657473567920</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Fix: TimeUnits Import Missing .js Extension">
+      <created>1657475121557</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1657475121557</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Chore: Make Registerable Check More Robust">
+      <created>1657475615400</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1657475615400</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Chore: Log Errors More Explicitly">
+      <created>1657770445822</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1657770445822</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -272,6 +312,10 @@
     <MESSAGE value="Feat: Add safeMention Function To Safely Mention a User if Not Cached" />
     <MESSAGE value="Fix: Interaction Failing Early Because It Was Not Deferred" />
     <MESSAGE value="Fix: Allow Verifying Users to Attach Files" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: Allow Verifying Users to Attach Files" />
+    <MESSAGE value="Chore: Make Event Deadline More Obvious" />
+    <MESSAGE value="Fix: TimeUnits Import Missing .js Extension" />
+    <MESSAGE value="Chore: Make Registerable Check More Robust" />
+    <MESSAGE value="Chore: Log Errors More Explicitly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Chore: Log Errors More Explicitly" />
   </component>
 </project>

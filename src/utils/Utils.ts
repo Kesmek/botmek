@@ -107,8 +107,9 @@ export class EmbedUtils {
     let description = "";
     for (const [position, ids] of Object.entries(staff)) {
       description += `\n**__${position}__** (${ids.length})\n`;
+      const members = await interaction.guild?.members.fetch({ force: true });
       for (const id of ids) {
-        const member = await interaction.guild?.members.fetch(id);
+        const member = members?.get(id);
         if (member) {
           description
             += `${member} (${member.user.username}#${member.user.discriminator})\n`;
